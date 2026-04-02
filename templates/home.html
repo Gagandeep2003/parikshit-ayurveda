@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Shree Parikshit Ayurveda - Classical Ayurveda Clinic{% endblock %}
+{% block title %}Shree Parikshit Ayurveda{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -190,39 +190,49 @@
         position: relative;
     }
 
+    .about-content {
+        gap: 15px;
+    }
+
     .about-img-placeholder {
-        width: 100%;
+        width: 120%;
         aspect-ratio: 4/5;
         border-radius: var(--radius-xl);
-        background: linear-gradient(135deg, var(--bg-card) 0%, var(--accent-dark) 100%);
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-direction: column;
-        gap: 16px;
-        border: 1px solid var(--border-color);
+        border: none;
         overflow: hidden;
         position: relative;
+        overflow: hidden;
+    }
+    .custom-img {
+        width:100%;
+        max-width: 360px;
+        height: auto;
+        border-radius: 16px;
+        object-fit: cover;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        transition: transform 0.3s ease;
     }
 
-    .about-img-placeholder::before {
-        content: '🌿';
-        font-size: 5rem;
-        opacity: 0.3;
+    .custom-img:hover {
+        transform: scale(1.05);
     }
 
     .about-floating-card {
         position: absolute;
-        bottom: -20px;
-        right: -20px;
+        bottom: 0;
+        right: 0;
         background: var(--bg-card);
         border: 1px solid var(--border-color);
         border-radius: var(--radius-lg);
-        padding: 20px 24px;
+        padding: 12px 16px;
         display: flex;
         align-items: center;
         gap: 12px;
         box-shadow: var(--shadow-lg);
+        transform: scale(0.9);
     }
 
     .about-floating-icon {
@@ -242,19 +252,20 @@
     .about-floating-text span { color: var(--text-muted); font-size: 0.75rem; }
 
     .about-label {
-        font-size: 0.75rem;
-        letter-spacing: 3px;
+        font-size: 2.2rem;
+        letter-spacing: 4px;
         text-transform: uppercase;
-        color: var(--gold);
+        color: #f28c38;
         font-weight: 600;
         margin-bottom: 12px;
+        margin-left: 75px;
     }
 
     .about-title {
         font-family: var(--font-display);
-        font-size: 2.2rem;
+        font-size: 3rem;
         font-weight: 700;
-        line-height: 1.2;
+        line-height: 1.4;
         margin-bottom: 20px;
     }
 
@@ -587,7 +598,7 @@
 <section class="section">
     <div class="about-grid">
         <div class="about-image">
-            <div class="about-img-placeholder"></div>
+            <img src=" {{ url_for('static', filename='images/bp.jpeg')}}" class="custom-img">
             <div class="about-floating-card">
                 <div class="about-floating-icon"><i class="fas fa-check"></i></div>
                 <div class="about-floating-text">
@@ -596,7 +607,6 @@
                 </div>
             </div>
         </div>
-        <div>
             <div class="about-label">About Us</div>
             <h2 class="about-title">Classical Ayurveda for Modern Wellness</h2>
             <p class="about-desc">At Shree Parikshit Ayurveda, we blend ancient Ayurvedic wisdom with personalized care. Our clinic in Sector 56, Gurugram offers authentic treatments including Nadi Pariksha (pulse diagnosis), customized Panchkarma therapies, and holistic health consultations.</p>
