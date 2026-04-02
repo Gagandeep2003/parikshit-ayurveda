@@ -92,57 +92,35 @@
         .nav-brand {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
             text-decoration: none;
-            color: var(--text-primary);
+            color: inherit;
         }
 
-        .nav-logo {
+        .nav-brand,
+        .nav-brand:visited,
+        .nav-brand:hover,
+        .nav-brand:active {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .nav-logo-img {
             width: 44px;
             height: 44px;
-            border-radius: 50%;
-            background: var(--gradient-accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.3rem;
-            color: #fff;
-            box-shadow: var(--shadow-glow);
-            position: relative;
-        }
-
-        .nav-logo::after {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-            opacity: 0.4;
-        }
-
-        .nav-brand-text {
-            display: flex;
-            flex-direction: column;
+            border-radius: 10px;
+            object-fit: cover;
         }
 
         .nav-brand-name {
             font-family: var(--font-display);
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1.4rem;
             letter-spacing: 0.5px;
             line-height: 1.2;
+            color: #f28c38;
         }
-
-        .nav-brand-tagline {
-            font-size: 0.65rem;
-            color: var(--gold);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-
+        
         .nav-links {
             display: flex;
             align-items: center;
@@ -676,12 +654,9 @@
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <a href="{{ url_for('home') }}" class="nav-brand">
-            <div class="nav-logo">SP</div>
-            <div class="nav-brand-text">
-                <span class="nav-brand-name">Shree Parikshit Ayurveda</span>
-                <span class="nav-brand-tagline">Classical Ayurveda Clinic</span>
-            </div>
-        </a>
+            <img src="{{ url_for('static', filename='images/pa2.png')}}" class="nav-logo-img">
+            <span class="nav-brand-name">Shree Parikshit Ayurveda</span>
+            </a>
 
         <ul class="nav-links">
             <li><a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a></li>
@@ -843,3 +818,4 @@
     {% block extra_js %}{% endblock %}
 </body>
 </html>
+
