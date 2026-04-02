@@ -1,0 +1,742 @@
+{% extends "base.html" %}
+{% block title %}Shree Parikshit Ayurveda - Classical Ayurveda Clinic{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ─── Hero ─────────────────────────────────────────── */
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        padding: 100px 2rem 80px;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse at 20% 50%, rgba(139, 69, 19, 0.08) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 20%, rgba(201, 168, 108, 0.06) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 80%, rgba(107, 45, 45, 0.05) 0%, transparent 50%);
+    }
+
+    .hero-content {
+        position: relative;
+        text-align: center;
+        max-width: 800px;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(139, 69, 19, 0.1);
+        border: 1px solid rgba(139, 69, 19, 0.2);
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        color: var(--gold);
+        letter-spacing: 1px;
+        margin-bottom: 28px;
+        font-weight: 500;
+    }
+
+    .hero-badge i { font-size: 0.7rem; }
+
+    .hero-title {
+        font-family: var(--font-display);
+        font-size: 3.8rem;
+        font-weight: 700;
+        line-height: 1.15;
+        margin-bottom: 24px;
+        background: linear-gradient(135deg, var(--text-primary) 0%, var(--gold-light) 50%, var(--text-primary) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-desc {
+        font-size: 1.15rem;
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 40px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 60px;
+        flex-wrap: wrap;
+    }
+
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 60px;
+        padding-top: 40px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .hero-stat { text-align: center; }
+
+    .hero-stat-value {
+        font-family: var(--font-display);
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--gold);
+        line-height: 1;
+        margin-bottom: 6px;
+    }
+
+    .hero-stat-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 500;
+    }
+
+    /* ─── Highlights Grid (Instagram Style) ────────────── */
+    .highlights {
+        padding: 0 2rem 80px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .highlights-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .highlights-header i { color: var(--gold); font-size: 1rem; }
+    .highlights-header span { font-weight: 600; font-size: 0.85rem; color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase; }
+
+    .highlights-scroll {
+        display: flex;
+        gap: 24px;
+        overflow-x: auto;
+        padding: 10px 0 20px;
+        scrollbar-width: none;
+    }
+
+    .highlights-scroll::-webkit-scrollbar { display: none; }
+
+    .highlight-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+
+    .highlight-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: var(--bg-card);
+        border: 2.5px solid transparent;
+        background-clip: padding-box;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        transition: var(--transition);
+    }
+
+    .highlight-circle::before {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        background: var(--gradient-accent);
+        z-index: -1;
+    }
+
+    .highlight-item:hover .highlight-circle { transform: scale(1.08); }
+
+    .highlight-label {
+        font-size: 0.72rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+        max-width: 80px;
+        text-align: center;
+        line-height: 1.3;
+    }
+
+    /* ─── About Section ────────────────────────────────── */
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .about-image {
+        position: relative;
+    }
+
+    .about-img-placeholder {
+        width: 100%;
+        aspect-ratio: 4/5;
+        border-radius: var(--radius-xl);
+        background: linear-gradient(135deg, var(--bg-card) 0%, var(--accent-dark) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 16px;
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .about-img-placeholder::before {
+        content: '🌿';
+        font-size: 5rem;
+        opacity: 0.3;
+    }
+
+    .about-floating-card {
+        position: absolute;
+        bottom: -20px;
+        right: -20px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .about-floating-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(46, 204, 113, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--green);
+        font-size: 1.1rem;
+    }
+
+    .about-floating-text { font-size: 0.85rem; }
+    .about-floating-text strong { display: block; color: var(--text-primary); }
+    .about-floating-text span { color: var(--text-muted); font-size: 0.75rem; }
+
+    .about-label {
+        font-size: 0.75rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gold);
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .about-title {
+        font-family: var(--font-display);
+        font-size: 2.2rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 20px;
+    }
+
+    .about-desc {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 28px;
+        font-size: 0.95rem;
+    }
+
+    .about-features {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    .about-feature {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .about-feature i { color: var(--gold); font-size: 0.8rem; }
+
+    /* ─── Services Preview ─────────────────────────────── */
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    .service-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 36px 28px;
+        text-align: center;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: var(--gradient-accent);
+        opacity: 0;
+        transition: var(--transition);
+    }
+
+    .service-card:hover {
+        border-color: var(--border-light);
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: var(--radius-md);
+        background: rgba(139, 69, 19, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.7rem;
+        margin: 0 auto 20px;
+    }
+
+    .service-card h3 {
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .service-card p {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+
+    /* ─── Testimonials ─────────────────────────────────── */
+    .testimonials-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    .testimonial-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 32px;
+        transition: var(--transition);
+    }
+
+    .testimonial-card:hover {
+        border-color: var(--border-light);
+        transform: translateY(-4px);
+    }
+
+    .testimonial-stars {
+        color: var(--gold);
+        margin-bottom: 16px;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+    }
+
+    .testimonial-text {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .testimonial-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--accent-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gold-light);
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .testimonial-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .testimonial-role {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    /* ─── CTA Section ──────────────────────────────────── */
+    .cta-section {
+        background: linear-gradient(135deg, rgba(139, 69, 19, 0.08), rgba(107, 45, 45, 0.1));
+        border: 1px solid rgba(139, 69, 19, 0.15);
+        border-radius: var(--radius-xl);
+        padding: 80px 40px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        max-width: 1000px;
+        margin: 0 auto 80px;
+    }
+
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(201, 168, 108, 0.05), transparent 60%);
+    }
+
+    .cta-title {
+        font-family: var(--font-display);
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        position: relative;
+    }
+
+    .cta-desc {
+        color: var(--text-secondary);
+        font-size: 1.05rem;
+        margin-bottom: 36px;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+    }
+
+    .cta-actions {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        position: relative;
+    }
+
+    /* ─── Info Bar ─────────────────────────────────────── */
+    .info-bar {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .info-item {
+        text-align: center;
+        padding: 28px 20px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        transition: var(--transition);
+    }
+
+    .info-item:hover { border-color: var(--border-light); transform: translateY(-2px); }
+
+    .info-item i {
+        font-size: 1.4rem;
+        color: var(--gold);
+        margin-bottom: 12px;
+    }
+
+    .info-item h4 {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .info-item p {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+        .hero-title { font-size: 2.4rem; }
+        .hero-stats { gap: 30px; flex-wrap: wrap; }
+        .about-grid { grid-template-columns: 1fr; }
+        .services-grid { grid-template-columns: 1fr; }
+        .testimonials-grid { grid-template-columns: 1fr; }
+        .info-bar { grid-template-columns: repeat(2, 1fr); }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">
+            <i class="fas fa-star"></i>
+            5.0 Rated on Google · 91+ Reviews
+        </div>
+        <h1 class="hero-title">Heal Naturally with<br>Classical Ayurveda</h1>
+        <p class="hero-desc">Experience authentic Ayurvedic healing at Shree Parikshit Ayurveda. Personalized treatments through Nadi Pariksha, Panchkarma therapy, and holistic wellness care in Gurugram.</p>
+        <div class="hero-actions">
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('book') }}" class="btn btn-primary btn-lg"><i class="fas fa-calendar-plus"></i> Book Consultation</a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg"><i class="fas fa-calendar-plus"></i> Book Consultation</a>
+            {% endif %}
+            <a href="{{ url_for('services') }}" class="btn btn-outline btn-lg"><i class="fas fa-leaf"></i> Our Services</a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-value">5.0 ★</div>
+                <div class="hero-stat-label">Google Rating</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">91+</div>
+                <div class="hero-stat-label">Happy Patients</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">10+</div>
+                <div class="hero-stat-label">Treatments</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">Sec 56</div>
+                <div class="hero-stat-label">Gurugram</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Instagram-style Highlights -->
+<section class="highlights">
+    <div class="highlights-header">
+        <i class="fas fa-circle-notch"></i>
+        <span>Our Specializations</span>
+    </div>
+    <div class="highlights-scroll">
+        <div class="highlight-item" onclick="window.location.href='{{ url_for('services') }}'">
+            <div class="highlight-circle">🔍</div>
+            <span class="highlight-label">Nadi Pariksha</span>
+        </div>
+        <div class="highlight-item" onclick="window.location.href='{{ url_for('services') }}'">
+            <div class="highlight-circle">🧘</div>
+            <span class="highlight-label">Panchkarma</span>
+        </div>
+        <div class="highlight-item" onclick="window.location.href='{{ url_for('services') }}'">
+            <div class="highlight-circle">🌿</div>
+            <span class="highlight-label">Digestive Health</span>
+        </div>
+        <div class="highlight-item" onclick="window.location.href='{{ url_for('services') }}'">
+            <div class="highlight-circle">⚡</div>
+            <span class="highlight-label">Hormonal Health</span>
+        </div>
+        <div class="highlight-item" onclick="window.location.href='{{ url_for('services') }}'">
+            <div class="highlight-circle">😌</div>
+            <span class="highlight-label">Stress & Sleep</span>
+        </div>
+        <div class="highlight-item" onclick="window.location.href='{{ url_for('services') }}'">
+            <div class="highlight-circle">🌸</div>
+            <span class="highlight-label">Fertility</span>
+        </div>
+        <div class="highlight-item" onclick="window.location.href='{{ url_for('services') }}'">
+            <div class="highlight-circle">💚</div>
+            <span class="highlight-label">Gut Health</span>
+        </div>
+        <div class="highlight-item" onclick="window.location.href='{{ url_for('services') }}'">
+            <div class="highlight-circle">⭐</div>
+            <span class="highlight-label">Reviews</span>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="section">
+    <div class="about-grid">
+        <div class="about-image">
+            <div class="about-img-placeholder"></div>
+            <div class="about-floating-card">
+                <div class="about-floating-icon"><i class="fas fa-check"></i></div>
+                <div class="about-floating-text">
+                    <strong>Trusted by 91+ Patients</strong>
+                    <span>5.0 ★ Google Rating</span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="about-label">About Us</div>
+            <h2 class="about-title">Classical Ayurveda for Modern Wellness</h2>
+            <p class="about-desc">At Shree Parikshit Ayurveda, we blend ancient Ayurvedic wisdom with personalized care. Our clinic in Sector 56, Gurugram offers authentic treatments including Nadi Pariksha (pulse diagnosis), customized Panchkarma therapies, and holistic health consultations.</p>
+            <div class="about-features">
+                <div class="about-feature"><i class="fas fa-check-circle"></i> Nadi Pariksha Diagnosis</div>
+                <div class="about-feature"><i class="fas fa-check-circle"></i> Personalized Care Plans</div>
+                <div class="about-feature"><i class="fas fa-check-circle"></i> Authentic Panchkarma</div>
+                <div class="about-feature"><i class="fas fa-check-circle"></i> Hormonal Balance</div>
+                <div class="about-feature"><i class="fas fa-check-circle"></i> Digestive Wellness</div>
+                <div class="about-feature"><i class="fas fa-check-circle"></i> Stress Management</div>
+            </div>
+            <a href="{{ url_for('services') }}" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Explore Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- Services Preview -->
+<section class="section" style="padding-top: 0;">
+    <div class="section-header">
+        <div class="section-label">What We Offer</div>
+        <h2 class="section-title">Our Healing Services</h2>
+        <p class="section-subtitle">Discover personalized Ayurvedic treatments designed to restore balance and promote natural healing.</p>
+    </div>
+    <div class="services-grid">
+        <div class="service-card">
+            <div class="service-icon">🔍</div>
+            <h3>Nadi Pariksha</h3>
+            <p>Ancient pulse diagnosis technique to understand your unique body constitution and identify root causes of imbalance.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">🧘</div>
+            <h3>Panchkarma Therapy</h3>
+            <p>Five-fold detoxification and rejuvenation therapy to cleanse the body, restore balance and enhance vitality.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">🌿</div>
+            <h3>Digestive Health</h3>
+            <p>Specialized treatments for IBS, acidity, bloating, and other digestive disorders using herbal formulations.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">⚡</div>
+            <h3>Hormonal Health</h3>
+            <p>Natural solutions for PCOD/PCOS, thyroid imbalances, and hormonal disorders through Ayurvedic approach.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">😌</div>
+            <h3>Stress & Sleep</h3>
+            <p>Holistic stress management and sleep therapy through Shirodhara, meditation guidance, and herbal remedies.</p>
+        </div>
+        <div class="service-card">
+            <div class="service-icon">🌸</div>
+            <h3>Fertility Care</h3>
+            <p>Natural fertility enhancement through Ayurvedic treatments, diet planning, and lifestyle modifications.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section" style="padding-top: 20px;">
+    <div class="section-header">
+        <div class="section-label">Patient Stories</div>
+        <h2 class="section-title">What Our Patients Say</h2>
+        <p class="section-subtitle">Hear from those who have experienced healing at our clinic.</p>
+    </div>
+    <div class="testimonials-grid">
+        <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Amazing experience! The Nadi Pariksha was incredibly accurate. Dr. Parikshit identified my issues within minutes and the treatment plan has been life-changing."</p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">S</div>
+                <div>
+                    <div class="testimonial-name">Sandeep R.</div>
+                    <div class="testimonial-role">Digestive Health Patient</div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"After years of PCOD struggles, the Ayurvedic treatment here finally gave me relief. The personalized approach and genuine care make all the difference."</p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">P</div>
+                <div>
+                    <div class="testimonial-name">Priya M.</div>
+                    <div class="testimonial-role">Hormonal Health Patient</div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"The Panchkarma therapy was a rejuvenating experience. My stress levels have dropped significantly and I sleep so much better now. Highly recommended!"</p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">A</div>
+                <div>
+                    <div class="testimonial-name">Ankit S.</div>
+                    <div class="testimonial-role">Stress Management Patient</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Info Bar -->
+<section class="section" style="padding-top: 0;">
+    <div class="info-bar">
+        <div class="info-item">
+            <i class="fas fa-clock"></i>
+            <h4>Clinic Hours</h4>
+            <p>Tue-Sun: 10 AM - 8 PM</p>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <h4>Location</h4>
+            <p>Sector 56, Gurugram</p>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <h4>Call Us</h4>
+            <p>+91 99909 78771</p>
+        </div>
+        <div class="info-item">
+            <i class="fas fa-calendar-alt"></i>
+            <h4>Monday</h4>
+            <p style="color: var(--red);">Closed</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section" style="padding-top: 20px;">
+    <div class="cta-section">
+        <h2 class="cta-title">Begin Your Healing Journey</h2>
+        <p class="cta-desc">Take the first step towards natural health. Book your consultation with Shree Parikshit Ayurveda today.</p>
+        <div class="cta-actions">
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('book') }}" class="btn btn-primary btn-lg"><i class="fas fa-calendar-plus"></i> Book Now</a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg"><i class="fas fa-user-plus"></i> Register & Book</a>
+            {% endif %}
+            <a href="https://wa.me/919990978771" class="btn btn-outline btn-lg" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

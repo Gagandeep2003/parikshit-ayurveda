@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+{% block title %}Blog - Shree Parikshit Ayurveda{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-hero {
+        padding: 120px 2rem 60px;
+        text-align: center;
+        position: relative;
+    }
+
+    .page-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 0%, rgba(139, 69, 19, 0.08), transparent 60%);
+    }
+
+    .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem 80px;
+    }
+
+    .blog-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+    .blog-card:hover {
+        border-color: var(--border-light);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .blog-thumb {
+        height: 200px;
+        background: linear-gradient(135deg, var(--accent-dark), var(--bg-card));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        position: relative;
+    }
+
+    .blog-category {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(8px);
+        padding: 5px 12px;
+        border-radius: 50px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--gold);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .blog-body {
+        padding: 24px;
+    }
+
+    .blog-date {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .blog-date i { font-size: 0.7rem; }
+
+    .blog-title {
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        line-height: 1.4;
+    }
+
+    .blog-excerpt {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        line-height: 1.6;
+        margin-bottom: 16px;
+    }
+
+    .blog-read-more {
+        color: var(--gold);
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: var(--transition);
+    }
+
+    .blog-read-more:hover { gap: 10px; }
+
+    /* Featured blog */
+    .blog-featured {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+
+    .blog-featured:hover {
+        border-color: var(--border-light);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .blog-featured .blog-thumb {
+        height: 100%;
+        min-height: 300px;
+    }
+
+    .blog-featured .blog-body {
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .blog-featured .blog-title { font-size: 1.5rem; }
+    .blog-featured .blog-excerpt { font-size: 0.95rem; }
+
+    .blog-featured-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(139, 69, 19, 0.15);
+        border: 1px solid rgba(139, 69, 19, 0.2);
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 0.7rem;
+        color: var(--gold);
+        font-weight: 600;
+        margin-bottom: 16px;
+        width: fit-content;
+    }
+
+    @media (max-width: 768px) {
+        .blog-grid { grid-template-columns: 1fr; }
+        .blog-featured { grid-template-columns: 1fr; }
+        .blog-featured .blog-thumb { min-height: 200px; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="section-header" style="position:relative;">
+        <div class="section-label">Wellness Insights</div>
+        <h1 class="section-title">Ayurveda Blog</h1>
+        <p class="section-subtitle">Explore the wisdom of Ayurveda through our articles on health, wellness, and natural healing.</p>
+    </div>
+</section>
+
+<div class="blog-grid">
+    <!-- Featured Blog -->
+    <div class="blog-featured">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, #2c1810, #4a2818);">🌿</div>
+        <div class="blog-body">
+            <div class="blog-featured-badge"><i class="fas fa-fire"></i> Featured</div>
+            <div class="blog-date"><i class="far fa-calendar"></i> March 25, 2026</div>
+            <h3 class="blog-title">8 Ghante Soye — Phir Bhi Thakaan Nahi Gayi?</h3>
+            <p class="blog-excerpt">Problem gahraon mein nahi — neend ki quality mein hai. Ayurveda explains why simply sleeping 8 hours isn't enough. Discover how your dosha type affects sleep quality and what you can do to wake up truly refreshed.</p>
+            <a href="#" class="blog-read-more">Read Full Article <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Blog Post 2 -->
+    <div class="blog-card">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, #1a2a1a, #2d4a2d);">
+            <span>⚡</span>
+        </div>
+        <div class="blog-body">
+            <div class="blog-date"><i class="far fa-calendar"></i> March 20, 2026</div>
+            <h3 class="blog-title">PCOD Hai — Par Doctor Ne Sirf Tablet Diya?</h3>
+            <p class="blog-excerpt">PCOD ek condition nahi — 3 slag types hoti hain. Ek tablet sab ka ilaj nahi. Discover the Ayurvedic approach to understanding and treating different types of PCOD naturally.</p>
+            <a href="#" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Blog Post 3 -->
+    <div class="blog-card">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, #2a1a1a, #4a2a2a);">
+            <span>🧠</span>
+        </div>
+        <div class="blog-body">
+            <div class="blog-date"><i class="far fa-calendar"></i> March 15, 2026</div>
+            <h3 class="blog-title">Subah Uthke Mood Kharab Tha — Pet Ne Signal Diya Tha</h3>
+            <p class="blog-excerpt">Yeh coincidence nahi. Gut aur brain ek doosre se directly baat karte hain. Learn how your gut health directly impacts your mood, energy, and mental clarity according to Ayurveda.</p>
+            <a href="#" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Blog Post 4 -->
+    <div class="blog-card">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, #1a1a2a, #2a2a4a);">
+            <span>🔥</span>
+        </div>
+        <div class="blog-body">
+            <div class="blog-date"><i class="far fa-calendar"></i> March 10, 2026</div>
+            <h3 class="blog-title">Agni: The Digestive Fire That Rules Your Health</h3>
+            <p class="blog-excerpt">In Ayurveda, Agni (digestive fire) is the key to good health. Weak Agni leads to toxin buildup. Learn how to strengthen your Agni naturally with simple daily practices.</p>
+            <a href="#" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Blog Post 5 -->
+    <div class="blog-card">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, #2a201a, #4a3818);">
+            <span>🍵</span>
+        </div>
+        <div class="blog-body">
+            <div class="blog-date"><i class="far fa-calendar"></i> March 5, 2026</div>
+            <h3 class="blog-title">Nadi Pariksha: How Your Pulse Reveals Everything</h3>
+            <p class="blog-excerpt">The ancient art of pulse diagnosis can detect diseases even before symptoms appear. Understand how this 5000-year-old technique works and why it's still relevant today.</p>
+            <a href="#" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Blog Post 6 -->
+    <div class="blog-card">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, #1a2a2a, #2a4a4a);">
+            <span>🌸</span>
+        </div>
+        <div class="blog-body">
+            <div class="blog-date"><i class="far fa-calendar"></i> February 28, 2026</div>
+            <h3 class="blog-title">Seasonal Detox: Why Ritucharya Matters</h3>
+            <p class="blog-excerpt">Ayurveda prescribes different routines for each season (Ritucharya). Learn why seasonal detox is essential and how to align your lifestyle with nature's rhythms for optimal health.</p>
+            <a href="#" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <!-- Blog Post 7 -->
+    <div class="blog-card">
+        <div class="blog-thumb" style="background: linear-gradient(135deg, #201a2a, #3a2a4a);">
+            <span>💤</span>
+        </div>
+        <div class="blog-body">
+            <div class="blog-date"><i class="far fa-calendar"></i> February 20, 2026</div>
+            <h3 class="blog-title">Stress Is Not Just In Your Head — It's In Your Gut</h3>
+            <p class="blog-excerpt">Modern science is now proving what Ayurveda knew 5000 years ago — the gut-brain axis. Discover Ayurvedic herbs and practices that heal both your mind and digestive system.</p>
+            <a href="#" class="blog-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+{% endblock %}

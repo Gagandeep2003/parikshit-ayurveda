@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+{% block title %}Contact - Shree Parikshit Ayurveda{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-hero {
+        padding: 120px 2rem 60px;
+        text-align: center;
+        position: relative;
+    }
+
+    .page-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 0%, rgba(139, 69, 19, 0.08), transparent 60%);
+    }
+
+    .contact-layout {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 40px;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem 80px;
+    }
+
+    .contact-info-section {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .contact-info-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        transition: var(--transition);
+    }
+
+    .contact-info-card:hover {
+        border-color: var(--border-light);
+        transform: translateX(4px);
+    }
+
+    .contact-info-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: var(--radius-md);
+        background: rgba(139, 69, 19, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 1.1rem;
+        color: var(--gold);
+    }
+
+    .contact-info-content h4 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .contact-info-content p {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .contact-info-content a {
+        color: var(--gold);
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .contact-info-content a:hover { color: var(--gold-light); }
+
+    .contact-map {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        height: 220px;
+    }
+
+    .contact-map iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        filter: grayscale(0.5) brightness(0.8);
+    }
+
+    .contact-social {
+        display: flex;
+        gap: 12px;
+        margin-top: 8px;
+    }
+
+    .contact-social a {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: var(--transition);
+        font-size: 1.1rem;
+    }
+
+    .contact-social a:hover {
+        transform: translateY(-3px);
+    }
+
+    .contact-social a.wa:hover { background: var(--whatsapp); border-color: var(--whatsapp); color: #fff; }
+    .contact-social a.ig:hover { background: #E4405F; border-color: #E4405F; color: #fff; }
+    .contact-social a.ph:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .contact-social a.em:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    .contact-form-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 40px;
+    }
+
+    .contact-form-title {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .contact-form-subtitle {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        margin-bottom: 28px;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .hours-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px 16px;
+    }
+
+    .hours-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.82rem;
+        padding: 4px 0;
+    }
+
+    .hours-day { color: var(--text-secondary); }
+    .hours-time { color: var(--text-primary); font-weight: 500; }
+    .hours-closed { color: var(--red); font-weight: 500; }
+
+    @media (max-width: 768px) {
+        .contact-layout { grid-template-columns: 1fr; }
+        .form-row { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="section-header" style="position:relative;">
+        <div class="section-label">Get in Touch</div>
+        <h1 class="section-title">Contact Us</h1>
+        <p class="section-subtitle">We'd love to hear from you. Reach out through any of the channels below or fill in the contact form.</p>
+    </div>
+</section>
+
+<div class="contact-layout">
+    <div class="contact-info-section">
+        <!-- Address -->
+        <div class="contact-info-card">
+            <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="contact-info-content">
+                <h4>Visit Us</h4>
+                <p>Plot No. 569, Metro Mall Rd, near Metro Mall Road, Block B, Sector 56, Gurugram, Haryana 122011</p>
+            </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="contact-info-card">
+            <div class="contact-info-icon"><i class="fas fa-phone"></i></div>
+            <div class="contact-info-content">
+                <h4>Call Us</h4>
+                <p><a href="tel:+919990978771">+91 99909 78771</a></p>
+            </div>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="contact-info-card">
+            <div class="contact-info-icon" style="color: var(--whatsapp);"><i class="fab fa-whatsapp"></i></div>
+            <div class="contact-info-content">
+                <h4>WhatsApp</h4>
+                <p><a href="https://wa.me/919990978771" target="_blank">+91 99909 78771</a></p>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="contact-info-card">
+            <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-info-content">
+                <h4>Email</h4>
+                <p><a href="mailto:bharpur.spayur@gmail.com">bharpur.spayur@gmail.com</a></p>
+            </div>
+        </div>
+
+        <!-- Hours -->
+        <div class="contact-info-card">
+            <div class="contact-info-icon"><i class="fas fa-clock"></i></div>
+            <div class="contact-info-content">
+                <h4>Clinic Hours</h4>
+                <div class="hours-grid">
+                    <div class="hours-row"><span class="hours-day">Monday</span><span class="hours-closed">Closed</span></div>
+                    <div class="hours-row"><span class="hours-day">Tuesday</span><span class="hours-time">10 AM – 8 PM</span></div>
+                    <div class="hours-row"><span class="hours-day">Wednesday</span><span class="hours-time">10 AM – 8 PM</span></div>
+                    <div class="hours-row"><span class="hours-day">Thursday</span><span class="hours-time">10 AM – 8 PM</span></div>
+                    <div class="hours-row"><span class="hours-day">Friday</span><span class="hours-time">10 AM – 8 PM</span></div>
+                    <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">10 AM – 8 PM</span></div>
+                    <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">10 AM – 8 PM</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social -->
+        <div style="padding: 0 4px;">
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Follow Us</p>
+            <div class="contact-social">
+                <a href="https://wa.me/919990978771" target="_blank" class="wa"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/shree_parikshit_ayurveda/" target="_blank" class="ig"><i class="fab fa-instagram"></i></a>
+                <a href="tel:+919990978771" class="ph"><i class="fas fa-phone"></i></a>
+                <a href="mailto:bharpur.spayur@gmail.com" class="em"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+
+        <!-- Map -->
+        <div class="contact-map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3509.0!2d77.08!3d28.42!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDI1JzEyLjAiTiA3N8KwMDQnNDguMCJF!5e0!3m2!1sen!2sin!4v1" allowfullscreen loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <div class="contact-form-card">
+        <h2 class="contact-form-title">Send a Message</h2>
+        <p class="contact-form-subtitle">Have a question? Fill out the form and we'll get back to you as soon as possible.</p>
+
+        <form method="POST" action="{{ url_for('contact') }}">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Your Name *</label>
+                    <input type="text" name="name" class="form-input" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address *</label>
+                    <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" name="phone" class="form-input" placeholder="+91 XXXXX XXXXX">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Your Message *</label>
+                <textarea name="message" class="form-input" placeholder="Tell us about your health concern or any questions you have..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top:8px;">
+                <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

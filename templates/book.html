@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+{% block title %}Book Consultation - Shree Parikshit Ayurveda{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-hero {
+        padding: 120px 2rem 40px;
+        text-align: center;
+        position: relative;
+    }
+
+    .page-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 0%, rgba(139, 69, 19, 0.08), transparent 60%);
+    }
+
+    .booking-container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 0 2rem 80px;
+    }
+
+    .booking-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-xl);
+        padding: 40px;
+    }
+
+    .booking-step {
+        margin-bottom: 32px;
+    }
+
+    .booking-step-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .booking-step-num {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--gradient-accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: #fff;
+        flex-shrink: 0;
+    }
+
+    .booking-step-title {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .date-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: rgba(231, 76, 60, 0.1);
+        border: 1px solid rgba(231, 76, 60, 0.2);
+        border-radius: var(--radius-md);
+        font-size: 0.82rem;
+        color: var(--red);
+        margin-top: 8px;
+    }
+
+    .date-info.success {
+        background: rgba(46, 204, 113, 0.1);
+        border-color: rgba(46, 204, 113, 0.2);
+        color: var(--green);
+    }
+
+    .slots-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .slot-btn {
+        padding: 12px 16px;
+        background: var(--bg-input);
+        border: 1.5px solid var(--border-color);
+        border-radius: var(--radius-md);
+        color: var(--text-primary);
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+        text-align: center;
+    }
+
+    .slot-btn:hover {
+        border-color: var(--accent);
+        background: rgba(139, 69, 19, 0.1);
+    }
+
+    .slot-btn.selected {
+        border-color: var(--gold);
+        background: rgba(139, 69, 19, 0.15);
+        color: var(--gold);
+        box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .slot-btn.booked {
+        opacity: 0.35;
+        cursor: not-allowed;
+        text-decoration: line-through;
+    }
+
+    .slot-btn.booked:hover {
+        border-color: var(--border-color);
+        background: var(--bg-input);
+    }
+
+    .slots-loading {
+        text-align: center;
+        padding: 20px;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    .slots-closed {
+        text-align: center;
+        padding: 30px;
+        color: var(--red);
+        font-size: 0.9rem;
+    }
+
+    .slots-closed i { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+
+    .booking-summary {
+        background: rgba(139, 69, 19, 0.06);
+        border: 1px solid rgba(139, 69, 19, 0.12);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        margin-top: 24px;
+        display: none;
+    }
+
+    .booking-summary.show { display: block; }
+
+    .booking-summary h4 {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--gold);
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        font-size: 0.85rem;
+    }
+
+    .summary-label { color: var(--text-muted); }
+    .summary-value { color: var(--text-primary); font-weight: 500; }
+
+    .user-info-box {
+        background: rgba(46, 204, 113, 0.06);
+        border: 1px solid rgba(46, 204, 113, 0.15);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .user-info-box i { color: var(--green); font-size: 1.1rem; }
+
+    .user-info-box p {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+
+    .user-info-box strong { color: var(--text-primary); }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="section-header" style="position:relative;">
+        <div class="section-label">Schedule Visit</div>
+        <h1 class="section-title">Book Consultation</h1>
+        <p class="section-subtitle">Choose a date and available time slot to schedule your Ayurvedic consultation.</p>
+    </div>
+</section>
+
+<div class="booking-container">
+    <div class="booking-card">
+        <div class="user-info-box">
+            <i class="fas fa-user-check"></i>
+            <p>Booking as <strong>{{ session.get('user_name') }}</strong> ({{ session.get('user_email') }})</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('book') }}" id="bookingForm">
+            <!-- Step 1: Date -->
+            <div class="booking-step">
+                <div class="booking-step-header">
+                    <div class="booking-step-num">1</div>
+                    <div class="booking-step-title">Select Date</div>
+                </div>
+                <input type="date" name="date" id="bookingDate" class="form-input" required
+                       min="{{ '' }}" onchange="fetchSlots(this.value)">
+                <div id="dateInfo"></div>
+            </div>
+
+            <!-- Step 2: Time Slot -->
+            <div class="booking-step">
+                <div class="booking-step-header">
+                    <div class="booking-step-num">2</div>
+                    <div class="booking-step-title">Select Time Slot</div>
+                </div>
+                <input type="hidden" name="time_slot" id="selectedSlot" required>
+                <div id="slotsContainer">
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">Please select a date first to see available slots.</p>
+                </div>
+            </div>
+
+            <!-- Step 3: Concern -->
+            <div class="booking-step" style="margin-bottom: 0;">
+                <div class="booking-step-header">
+                    <div class="booking-step-num">3</div>
+                    <div class="booking-step-title">Health Concern (Optional)</div>
+                </div>
+                <textarea name="concern" class="form-input" placeholder="Briefly describe your health concern or reason for consultation..." style="min-height: 100px;"></textarea>
+            </div>
+
+            <!-- Summary -->
+            <div class="booking-summary" id="bookingSummary">
+                <h4>Booking Summary</h4>
+                <div class="summary-row">
+                    <span class="summary-label">Patient</span>
+                    <span class="summary-value">{{ session.get('user_name') }}</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Date</span>
+                    <span class="summary-value" id="summaryDate">—</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Time</span>
+                    <span class="summary-value" id="summarySlot">—</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Location</span>
+                    <span class="summary-value">Sector 56, Gurugram</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top: 28px;" id="bookBtn" disabled>
+                <i class="fas fa-calendar-check"></i> Confirm Booking
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Set min date to today
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    document.getElementById('bookingDate').min = `${yyyy}-${mm}-${dd}`;
+
+    let selectedSlotValue = '';
+
+    async function fetchSlots(date) {
+        const container = document.getElementById('slotsContainer');
+        const dateInfo = document.getElementById('dateInfo');
+        const summary = document.getElementById('bookingSummary');
+        const bookBtn = document.getElementById('bookBtn');
+
+        if (!date) return;
+
+        container.innerHTML = '<div class="slots-loading"><i class="fas fa-spinner fa-spin"></i> Loading available slots...</div>';
+        dateInfo.innerHTML = '';
+        bookBtn.disabled = true;
+        selectedSlotValue = '';
+        document.getElementById('selectedSlot').value = '';
+
+        try {
+            const res = await fetch(`/api/available-slots?date=${date}`);
+            const data = await res.json();
+
+            // Format date for display
+            const dateObj = new Date(date + 'T00:00:00');
+            const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const displayDate = `${dayNames[dateObj.getDay()]}, ${dateObj.getDate()} ${monthNames[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+
+            document.getElementById('summaryDate').textContent = displayDate;
+
+            if (data.closed) {
+                container.innerHTML = `
+                    <div class="slots-closed">
+                        <i class="fas fa-times-circle"></i>
+                        The clinic is closed on Mondays.<br>Please select another day.
+                    </div>
+                `;
+                dateInfo.innerHTML = '<div class="date-info"><i class="fas fa-exclamation-triangle"></i> Monday is a holiday. The clinic operates Tuesday to Sunday.</div>';
+                return;
+            }
+
+            dateInfo.innerHTML = `<div class="date-info success"><i class="fas fa-check-circle"></i> ${data.available.length} slot(s) available on ${displayDate}</div>`;
+
+            if (data.available.length === 0) {
+                container.innerHTML = '<div class="slots-closed"><i class="fas fa-calendar-times"></i>All slots are booked for this date.<br>Please choose another date.</div>';
+                return;
+            }
+
+            // Combine all slots
+            const allSlots = [...data.available.map(s => ({slot: s, available: true})), ...data.booked.map(s => ({slot: s, available: false}))];
+            allSlots.sort((a, b) => a.slot.localeCompare(b.slot));
+
+            let html = '<div class="slots-grid">';
+            allSlots.forEach(item => {
+                if (item.available) {
+                    html += `<button type="button" class="slot-btn" onclick="selectSlot(this, '${item.slot}')">${item.slot}</button>`;
+                } else {
+                    html += `<button type="button" class="slot-btn booked" disabled title="Already booked">${item.slot}</button>`;
+                }
+            });
+            html += '</div>';
+            container.innerHTML = html;
+            summary.classList.remove('show');
+
+        } catch (err) {
+            container.innerHTML = '<p style="color: var(--red);">Error loading slots. Please try again.</p>';
+        }
+    }
+
+    function selectSlot(el, slot) {
+        document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedSlotValue = slot;
+        document.getElementById('selectedSlot').value = slot;
+        document.getElementById('summarySlot').textContent = slot;
+        document.getElementById('bookingSummary').classList.add('show');
+        document.getElementById('bookBtn').disabled = false;
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        if (!document.getElementById('selectedSlot').value) {
+            e.preventDefault();
+            alert('Please select a time slot.');
+        }
+    });
+</script>
+{% endblock %}

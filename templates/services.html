@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+{% block title %}Services - Shree Parikshit Ayurveda{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-hero {
+        padding: 120px 2rem 60px;
+        text-align: center;
+        position: relative;
+    }
+
+    .page-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 0%, rgba(139, 69, 19, 0.08), transparent 60%);
+    }
+
+    .services-main-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem 80px;
+    }
+
+    .service-detail-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 40px 32px;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .service-detail-card::after {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: var(--gradient-accent);
+        opacity: 0;
+        transition: var(--transition);
+    }
+
+    .service-detail-card:hover {
+        border-color: var(--border-light);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .service-detail-card:hover::after { opacity: 1; }
+
+    .service-detail-icon {
+        width: 68px;
+        height: 68px;
+        border-radius: var(--radius-md);
+        background: rgba(139, 69, 19, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 24px;
+    }
+
+    .service-detail-card h3 {
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .service-detail-card p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+
+    .service-benefits {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .service-benefit {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+    }
+
+    .service-benefit i { color: var(--gold); font-size: 0.7rem; }
+
+    .service-full-width {
+        grid-column: 1 / -1;
+        background: linear-gradient(135deg, rgba(139, 69, 19, 0.06), rgba(107, 45, 45, 0.08));
+        border-color: rgba(139, 69, 19, 0.15);
+    }
+
+    .service-full-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+    }
+
+    .service-full-features {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .process-section {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 80px 2rem;
+    }
+
+    .process-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        position: relative;
+    }
+
+    .process-steps::before {
+        content: '';
+        position: absolute;
+        left: 30px;
+        top: 0; bottom: 0;
+        width: 2px;
+        background: var(--border-color);
+    }
+
+    .process-step {
+        display: flex;
+        gap: 24px;
+        padding: 28px 0;
+        position: relative;
+    }
+
+    .process-num {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--bg-card);
+        border: 2px solid var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--gold);
+        flex-shrink: 0;
+        z-index: 1;
+    }
+
+    .process-content h4 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .process-content p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .services-main-grid { grid-template-columns: 1fr; }
+        .service-full-inner { grid-template-columns: 1fr; }
+        .service-full-features { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="section-header" style="position:relative;">
+        <div class="section-label">Our Treatments</div>
+        <h1 class="section-title">Ayurvedic Healing Services</h1>
+        <p class="section-subtitle">Discover our range of classical Ayurvedic treatments designed to restore balance, detoxify, and rejuvenate your body and mind.</p>
+    </div>
+</section>
+
+<div class="services-main-grid">
+    <!-- Panchkarma - Featured -->
+    <div class="service-detail-card service-full-width">
+        <div class="service-full-inner">
+            <div>
+                <div class="service-detail-icon">🧘</div>
+                <h3>Panchkarma Therapy</h3>
+                <p>Our signature five-fold detoxification therapy is the cornerstone of Ayurvedic healing. Each Panchkarma treatment is personalized based on your unique Prakriti (constitution) to deeply cleanse, rejuvenate, and restore your body's natural equilibrium.</p>
+                <a href="{% if session.get('user_id') %}{{ url_for('book') }}{% else %}{{ url_for('register') }}{% endif %}" class="btn btn-primary"><i class="fas fa-calendar-plus"></i> Book Panchkarma</a>
+            </div>
+            <div class="service-full-features">
+                <div class="service-benefit"><i class="fas fa-check-circle"></i> Vamana (Emesis)</div>
+                <div class="service-benefit"><i class="fas fa-check-circle"></i> Virechana (Purgation)</div>
+                <div class="service-benefit"><i class="fas fa-check-circle"></i> Basti (Enema)</div>
+                <div class="service-benefit"><i class="fas fa-check-circle"></i> Nasya (Nasal)</div>
+                <div class="service-benefit"><i class="fas fa-check-circle"></i> Raktamokshana</div>
+                <div class="service-benefit"><i class="fas fa-check-circle"></i> Abhyanga Massage</div>
+                <div class="service-benefit"><i class="fas fa-check-circle"></i> Shirodhara</div>
+                <div class="service-benefit"><i class="fas fa-check-circle"></i> Swedana (Steam)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nadi Pariksha -->
+    <div class="service-detail-card">
+        <div class="service-detail-icon">🔍</div>
+        <h3>Nadi Pariksha</h3>
+        <p>Ancient Ayurvedic pulse diagnosis to accurately assess your body constitution (Prakriti), identify dosha imbalances, and detect underlying health issues through the subtle vibrations of your pulse.</p>
+        <div class="service-benefits">
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Accurate dosha assessment</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Root cause identification</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Personalized treatment plan</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Non-invasive diagnosis</div>
+        </div>
+    </div>
+
+    <!-- Digestive Health -->
+    <div class="service-detail-card">
+        <div class="service-detail-icon">🌿</div>
+        <h3>Digestive Health</h3>
+        <p>Comprehensive Ayurvedic solutions for digestive disorders including IBS, acidity, bloating, constipation, and poor appetite using classical herbal formulations and dietary guidance.</p>
+        <div class="service-benefits">
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> IBS & chronic acidity</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Bloating & gas relief</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Agni (digestive fire) restoration</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Customized diet plans</div>
+        </div>
+    </div>
+
+    <!-- Hormonal Health -->
+    <div class="service-detail-card">
+        <div class="service-detail-icon">⚡</div>
+        <h3>Hormonal Health</h3>
+        <p>Natural Ayurvedic treatments for hormonal imbalances including PCOD/PCOS, thyroid disorders, menstrual irregularities, and menopause management without harmful side effects.</p>
+        <div class="service-benefits">
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> PCOD/PCOS management</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Thyroid balance</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Menstrual health</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Menopause support</div>
+        </div>
+    </div>
+
+    <!-- Stress & Sleep -->
+    <div class="service-detail-card">
+        <div class="service-detail-icon">😌</div>
+        <h3>Stress & Sleep Management</h3>
+        <p>Holistic approach to managing stress, anxiety, and sleep disorders through Shirodhara therapy, herbal medicines, meditation guidance, and personalized lifestyle modifications.</p>
+        <div class="service-benefits">
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Shirodhara therapy</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Anxiety & stress relief</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Insomnia treatment</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Meditation guidance</div>
+        </div>
+    </div>
+
+    <!-- Fertility -->
+    <div class="service-detail-card">
+        <div class="service-detail-icon">🌸</div>
+        <h3>Fertility Care</h3>
+        <p>Natural fertility enhancement through time-tested Ayurvedic treatments, Rasayana therapy, specialized diet plans, and holistic lifestyle modifications for both men and women.</p>
+        <div class="service-benefits">
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Fertility enhancement</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Rasayana therapy</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Pre-conception care</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Reproductive health</div>
+        </div>
+    </div>
+
+    <!-- Gut Health -->
+    <div class="service-detail-card">
+        <div class="service-detail-icon">💚</div>
+        <h3>Gut Health</h3>
+        <p>Specialized gut restoration programs to heal leaky gut, improve microbiome health, and strengthen overall immunity through Ayurvedic principles and herbal remedies.</p>
+        <div class="service-benefits">
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Gut microbiome restoration</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Immunity enhancement</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Leaky gut treatment</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Detox & cleansing</div>
+        </div>
+    </div>
+
+    <!-- Personalized Care -->
+    <div class="service-detail-card">
+        <div class="service-detail-icon">💎</div>
+        <h3>Personalized Wellness</h3>
+        <p>Customized health and wellness programs tailored to your specific needs, including diet consultation, lifestyle guidance, herbal supplementation, and ongoing support.</p>
+        <div class="service-benefits">
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Custom treatment plans</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Diet consultation</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Lifestyle coaching</div>
+            <div class="service-benefit"><i class="fas fa-check-circle"></i> Follow-up support</div>
+        </div>
+    </div>
+</div>
+
+<!-- Process Section -->
+<section class="process-section">
+    <div class="section-header">
+        <div class="section-label">How It Works</div>
+        <h2 class="section-title">Your Healing Journey</h2>
+        <p class="section-subtitle">From first consultation to full recovery, here's how we guide your path to wellness.</p>
+    </div>
+    <div class="process-steps">
+        <div class="process-step">
+            <div class="process-num">1</div>
+            <div class="process-content">
+                <h4>Book Your Consultation</h4>
+                <p>Register on our website and book a convenient time slot. Our clinic operates Tuesday to Sunday, 10 AM to 8 PM.</p>
+            </div>
+        </div>
+        <div class="process-step">
+            <div class="process-num">2</div>
+            <div class="process-content">
+                <h4>Nadi Pariksha Assessment</h4>
+                <p>Your first visit includes a detailed pulse diagnosis to understand your unique constitution and identify the root cause of your concerns.</p>
+            </div>
+        </div>
+        <div class="process-step">
+            <div class="process-num">3</div>
+            <div class="process-content">
+                <h4>Personalized Treatment Plan</h4>
+                <p>Based on your assessment, we create a customized treatment plan including therapies, herbal medicines, diet modifications, and lifestyle changes.</p>
+            </div>
+        </div>
+        <div class="process-step">
+            <div class="process-num">4</div>
+            <div class="process-content">
+                <h4>Treatment & Healing</h4>
+                <p>Begin your healing journey with guided therapies and treatments. Regular follow-ups ensure your progress is on track.</p>
+            </div>
+        </div>
+        <div class="process-step">
+            <div class="process-num">5</div>
+            <div class="process-content">
+                <h4>Ongoing Wellness Support</h4>
+                <p>Even after recovery, we provide continued guidance to maintain your health and prevent recurrence through lifestyle and dietary recommendations.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

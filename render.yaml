@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: shree-parikshit-ayurveda
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 2
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SMTP_EMAIL
+        value: bharpur.spayur@gmail.com
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: PYTHON_VERSION
+        value: "3.11.6"

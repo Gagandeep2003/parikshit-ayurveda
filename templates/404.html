@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found - Shree Parikshit Ayurveda{% endblock %}
+
+{% block content %}
+<div style="min-height: calc(100vh - 72px); display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px 2rem;">
+    <div>
+        <div style="font-size: 6rem; margin-bottom: 16px; opacity: 0.2;">🌿</div>
+        <h1 style="font-family: var(--font-display); font-size: 4rem; font-weight: 700; color: var(--gold); margin-bottom: 12px;">404</h1>
+        <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 32px;">This page seems to have wandered off the path.</p>
+        <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg"><i class="fas fa-home"></i> Back to Home</a>
+    </div>
+</div>
+{% endblock %}

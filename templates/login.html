@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}Login - Shree Parikshit Ayurveda{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        min-height: calc(100vh - 72px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 2rem;
+        position: relative;
+    }
+
+    .auth-container::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse at 30% 40%, rgba(139, 69, 19, 0.06) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 60%, rgba(201, 168, 108, 0.04) 0%, transparent 50%);
+    }
+
+    .auth-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-xl);
+        padding: 48px 40px;
+        width: 100%;
+        max-width: 440px;
+        position: relative;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .auth-logo {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: var(--gradient-accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.8rem;
+        color: #fff;
+        margin: 0 auto 24px;
+        position: relative;
+        box-shadow: var(--shadow-glow);
+    }
+
+    .auth-logo::after {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        border: 2px solid var(--accent);
+        opacity: 0.3;
+    }
+
+    .auth-title {
+        text-align: center;
+        font-family: var(--font-display);
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .auth-subtitle {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 32px;
+    }
+
+    .auth-divider {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 24px 0;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border-color);
+    }
+
+    .auth-footer {
+        text-align: center;
+        margin-top: 24px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+
+    .auth-footer a {
+        color: var(--gold);
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+    }
+
+    .auth-footer a:hover { color: var(--gold-light); }
+
+    .password-toggle {
+        position: relative;
+    }
+
+    .password-toggle .toggle-eye {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: var(--transition);
+    }
+
+    .password-toggle .toggle-eye:hover { color: var(--text-secondary); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-logo">SP</div>
+        <h1 class="auth-title">Welcome Back</h1>
+        <p class="auth-subtitle">Sign in to book your consultation</p>
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <div class="password-toggle">
+                    <input type="password" name="password" id="loginPassword" class="form-input" placeholder="Enter your password" required>
+                    <i class="fas fa-eye toggle-eye" onclick="togglePassword('loginPassword', this)"></i>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top:8px;">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
+        </form>
+
+        <div class="auth-divider">or</div>
+
+        <a href="https://wa.me/919990978771?text=Hi%2C%20I%20would%20like%20to%20book%20a%20consultation." class="btn btn-ghost btn-block" target="_blank" style="color: var(--whatsapp); border-color: rgba(37, 211, 102, 0.3);">
+            <i class="fab fa-whatsapp"></i> Book via WhatsApp
+        </a>
+
+        <p class="auth-footer">
+            Don't have an account? <a href="{{ url_for('register') }}">Create one</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+</script>
+{% endblock %}
