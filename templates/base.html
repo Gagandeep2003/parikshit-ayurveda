@@ -509,18 +509,18 @@
         /* ─── Call Float ───────────────────────────── */
         .call-float {
             position: fixed;
-            bottom: 100px; /* above whatsapp button */
-            right: 28px;
+            bottom: 98px; /* above whatsapp button */
+            right: 30px;
             z-index: 9999;
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             background: #ff8c42;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             box-shadow: 0 4px 20px rgba(255, 140, 66, 0.4);
             transition: var(--transition);
             text-decoration: none;
@@ -557,6 +557,20 @@
 
             50% {
             box-shadow: 0 4px 30px rgba(255, 140, 66, 0.7);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .call-float {
+                width: 52px;
+                height: 52px;
+                font-size: 1.2rem;
+                bottom: 88px;
+                right: 18px;
+            }
+
+            .call-tooltip {
+                display: none;
             }
         }
 
