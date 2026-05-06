@@ -454,6 +454,8 @@
 
         textarea.form-input { resize: vertical; min-height: 120px; }
         select.form-input { cursor: pointer; }
+        
+
 
         /* ─── WhatsApp Float ───────────────────────────── */
         .whatsapp-float {
@@ -502,6 +504,60 @@
         @keyframes pulse-wa {
             0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
             50% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.6); }
+        }
+
+        /* ─── Call Float ───────────────────────────── */
+        .call-float {
+            position: fixed;
+            bottom: 100px; /* above whatsapp button */
+            right: 28px;
+            z-index: 9999;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #ff8c42;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(255, 140, 66, 0.4);
+            transition: var(--transition);
+            text-decoration: none;
+            animation: pulse-call 2s infinite;
+        }
+
+        .call-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(255, 140, 66, 0.6);
+        }
+
+        .call-tooltip {
+            position: absolute;
+            right: 70px;
+            background: #fff;
+            color: #333;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .call-float:hover .call-tooltip { opacity: 1; }
+
+        @keyframes pulse-call {
+            0%, 100% {
+            box-shadow: 0 4px 20px rgba(255, 140, 66, 0.4);
+        }
+
+            50% {
+            box-shadow: 0 4px 30px rgba(255, 140, 66, 0.7);
+            }
         }
 
         /* ─── Footer ───────────────────────────────────── */
@@ -778,6 +834,13 @@
         </div>
     </footer>
 
+    <!-- Call Float -->
+    <a href="tel:+919990978771"
+       class="call-float">
+        <i class="fas fa-phone-alt"></i>
+        <span class="call-tooltip">Call Us</span>
+    </a>
+
     <!-- WhatsApp Float -->
     <a href="https://wa.me/919990978771?text=Hello%20Shree%20Parikshit%20Ayurveda%2C%20I%20would%20like%20to%20enquire%20about%20consultation."
        class="whatsapp-float" target="_blank" rel="noopener">
@@ -818,4 +881,3 @@
     {% block extra_js %}{% endblock %}
 </body>
 </html>
-
