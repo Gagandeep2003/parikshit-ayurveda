@@ -7,6 +7,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11508612095"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-11508612095');
+    </script>
     <style>
         /* ─── CSS Reset & Variables ─────────────────────── */
         :root {
@@ -92,35 +101,57 @@
         .nav-brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
             text-decoration: none;
-            color: inherit;
+            color: var(--text-primary);
         }
 
-        .nav-brand,
-        .nav-brand:visited,
-        .nav-brand:hover,
-        .nav-brand:active {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .nav-logo-img {
+        .nav-logo {
             width: 44px;
             height: 44px;
-            border-radius: 10px;
-            object-fit: cover;
+            border-radius: 50%;
+            background: var(--gradient-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #fff;
+            box-shadow: var(--shadow-glow);
+            position: relative;
+        }
+
+        .nav-logo::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            opacity: 0.4;
+        }
+
+        .nav-brand-text {
+            display: flex;
+            flex-direction: column;
         }
 
         .nav-brand-name {
             font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.4rem;
+            font-weight: 600;
+            font-size: 1.1rem;
             letter-spacing: 0.5px;
             line-height: 1.2;
-            color: #f28c38;
         }
-        
+
+        .nav-brand-tagline {
+            font-size: 0.65rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
         .nav-links {
             display: flex;
             align-items: center;
@@ -454,8 +485,6 @@
 
         textarea.form-input { resize: vertical; min-height: 120px; }
         select.form-input { cursor: pointer; }
-        
-
 
         /* ─── WhatsApp Float ───────────────────────────── */
         .whatsapp-float {
@@ -504,74 +533,6 @@
         @keyframes pulse-wa {
             0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
             50% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.6); }
-        }
-
-        /* ─── Call Float ───────────────────────────── */
-        .call-float {
-            position: fixed;
-            bottom: 98px; /* above whatsapp button */
-            right: 30px;
-            z-index: 9999;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: #ff8c42;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 20px rgba(255, 140, 66, 0.4);
-            transition: var(--transition);
-            text-decoration: none;
-            animation: pulse-call 2s infinite;
-        }
-
-        .call-float:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(255, 140, 66, 0.6);
-        }
-
-        .call-tooltip {
-            position: absolute;
-            right: 70px;
-            background: #fff;
-            color: #333;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .call-float:hover .call-tooltip { opacity: 1; }
-
-        @keyframes pulse-call {
-            0%, 100% {
-            box-shadow: 0 4px 20px rgba(255, 140, 66, 0.4);
-        }
-
-            50% {
-            box-shadow: 0 4px 30px rgba(255, 140, 66, 0.7);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .call-float {
-                width: 52px;
-                height: 52px;
-                font-size: 1.2rem;
-                bottom: 88px;
-                right: 18px;
-            }
-
-            .call-tooltip {
-                display: none;
-            }
         }
 
         /* ─── Footer ───────────────────────────────────── */
@@ -724,9 +685,12 @@
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <a href="{{ url_for('home') }}" class="nav-brand">
-            <img src="{{ url_for('static', filename='images/pa2.png')}}" class="nav-logo-img">
-            <span class="nav-brand-name">Shree Parikshit Ayurveda</span>
-            </a>
+            <div class="nav-logo">SP</div>
+            <div class="nav-brand-text">
+                <span class="nav-brand-name">Shree Parikshit Ayurveda</span>
+                <span class="nav-brand-tagline">Classical Ayurveda Clinic</span>
+            </div>
+        </a>
 
         <ul class="nav-links">
             <li><a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a></li>
@@ -847,13 +811,6 @@
             <span>Crafted with 🌿 for holistic wellness</span>
         </div>
     </footer>
-
-    <!-- Call Float -->
-    <a href="tel:+919990978771"
-       class="call-float">
-        <i class="fas fa-phone-alt"></i>
-        <span class="call-tooltip">Call Us</span>
-    </a>
 
     <!-- WhatsApp Float -->
     <a href="https://wa.me/919990978771?text=Hello%20Shree%20Parikshit%20Ayurveda%2C%20I%20would%20like%20to%20enquire%20about%20consultation."
